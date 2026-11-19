@@ -1,0 +1,5 @@
+- name: Развёртывание микросервисов
+  hosts: app_servers
+  become: yes
+  roles:
+    - deploy_microservices

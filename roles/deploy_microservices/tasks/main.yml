@@ -1,0 +1,29 @@
+- name: Установка системных зависимостей
+  apt:
+    name:
+      - git
+      - docker.io
+      - docker-compose
+    state: present
+    update_cache: yes
+  tags: setup
+
+- name: Клонирование исходного кода
+  git:
+    repo: 'https://github.com/FomenkovaAnastasia/DevOps.git'
+    dest: /opt/microservices
+    version: main
+    force: yes
+  tags: checkout
+
+- name: Запуск контейнеров
+  command: docker compose up -d --build
+  args:
+    chdir: /opt/microservices
+  tags: up
+
+- name: Остановка контейнеров
+  command: docker compose down
+  args:
+    chdir: /opt/microservices
+  tags: down
